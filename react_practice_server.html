@@ -1,0 +1,72 @@
+<!-- index.html -->
+<html>
+  <head>
+    <title>Hello React</title>
+    <script src="https://fb.me/react-0.13.3.js"></script>
+    <script src="https://fb.me/JSXTransformer-0.13.3.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js"></script>
+  </head>
+  <body>
+    <div id="content"></div>
+    <script type="text/jsx">
+
+    // property setting -> props.data
+    var data = [
+      {author: "pate hunt", text:"one com"},
+      {author: "taro yamada", text:"second com"}
+    ];
+
+    // call var commentlist arg property data
+    var CommentBox = React.createClass({
+      render: function(){
+        return(
+          <div className="commentBox">
+            <h1>Comments</h1>
+            <CommentList data={this.props.data} />
+          </div>
+        );
+      }
+    });
+
+    // create new array commentnodes
+    var CommentList = React.createClass({
+      render: function(){
+        var commentNodes = this.props.data.map(function(data){
+          // call var comment
+          // vdom structure set
+          return (
+            // propety set var comment.author
+            <Comment author={data.author}>
+              // children
+              {data.text}
+            </Comment>
+          );
+        });
+        // ret -> commentbox
+        return (
+          <div className="commentList">
+              {commentNodes}
+          </div>
+        );
+      }
+    });
+
+    var Comment = React.createClass({
+      render: function(){
+        return (
+          <div className="comment">
+            <h2 className="commentAuthor">{this.props.author}</h2>
+              {this.props.children}
+          </div>
+        );
+      }
+    });
+
+    React.render(
+      <CommentBox url={data} />,
+      document.getElementById('content')
+    );
+    </script>
+  </body>
+</html>
